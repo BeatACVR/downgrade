@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Windows Downgrade Guide</title>
+<style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #1e1e2f;
+        color: #eaeaf0;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1 {
+        margin-bottom: 12px;
+    }
+
+    h2 {
+        margin-top: 36px;
+        margin-bottom: 12px;
+    }
+
+    p {
+        line-height: 1.7;
+        opacity: 0.92;
+        margin-bottom: 16px;
+    }
+
+    a {
+        color: #8f9bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    code {
+        background: #2d2d45;
+        padding: 3px 7px;
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 0.95em;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 12px 0 6px;
+    }
+
+    ul li {
+        background: rgba(255,255,255,0.06);
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 0.95em;
+        word-break: break-all;
+    }
+
+    .back {
+        margin-top: 48px;
+    }
+
+    .back button {
+        padding: 12px 22px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #5b7cfa, #8f5bfa);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .back button:hover {
+        transform: translateY(-1px);
+    }
+
+    .github {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .github a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.08);
+        color: #eaeaf0;
+        text-decoration: none;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        transition: transform 0.15s, background 0.15s;
+    }
+
+    .github a:hover {
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.12);
+    }
+
+    .github svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+</style>
+</head>
+<body>
+<div class="container">
+
+    <h1>Guide for Downgrading Geometry Dash on Windows</h1>
+
+    <p>
+        Open any web browser (such as Chrome or Edge) and enter
+        <code>steam://open/console</code>
+        in the address bar to open the Steam console.
+    </p>
+
+    <p>
+        Paste the following command into the console and press Enter:
+    </p>
+
+    <ul>
+        <li>download_depot 322170 322171 7678373534998244044</li>
+    </ul>
+
+    <p>
+        Wait for Steam to finish downloading the depot.
+    </p>
+
+    <p>
+        Open File Explorer and navigate to the following folder:
+    </p>
+
+    <ul>
+        <li>
+            C:\Program Files (x86)\Steam\steamapps\content\app_322170\depot_322171
+        </li>
+    </ul>
+
+    <p>
+        Copy <strong>everything inside</strong> this folder.
+    </p>
+
+    <p>
+        Go to the Geometry Dash installation directory:
+    </p>
+
+    <ul>
+        <li>
+            C:\Program Files (x86)\Steam\steamapps\common\Geometry Dash
+        </li>
+    </ul>
+
+    <p>
+        Paste the files and replace all existing files if prompted.
+    </p>
+
+    <p>
+        To prevent Steam from automatically updating Geometry Dash, go to:
+    </p>
+
+    <ul>
+        <li>
+            C:\Program Files (x86)\Steam\steamapps
+        </li>
+    </ul>
+
+    <p>
+        Right-click <code>appmanifest_322170.acf</code>, select <strong>Properties</strong>,
+        enable the <strong>Read-only</strong> checkbox, click <strong>Apply</strong>,
+        then press <strong>OK</strong>.
+    </p>
+
+    <h2>After Downgrading</h2>
+    <p>
+        You can now launch Geometry Dash through Steam and optionally install
+        <strong>Geode v4.10.1</strong> from
+        <a href="https://geode-sdk.org/install" target="_blank">the Geode website</a>.
+    </p>
+
+    <div class="back">
+        <a href="index.html"><button>← Back to Home</button></a>
+    </div>
+
+    <div class="github">
+        <a href="https://github.com/beatacvr/downgrade" target="_blank">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87
+                2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+                0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12
+                0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82
+                2.2-.82.44 1.1.16 1.92.08 2.12
+                .51.56.82 1.27.82 2.15
+                0 3.07-1.87 3.75-3.65 3.95
+                .29.25.54.73.54 1.48
+                0 1.07-.01 1.93-.01 2.2
+                0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8
+                c0-4.42-3.58-8-8-8Z"/>
+            </svg>
+            <span>Source</span>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>
