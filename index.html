@@ -8,6 +8,7 @@
 <meta property="og:url" content="https://beatacvr.github.io/downgrade">
 
 <title>Geometry Dash Downgrade Guides</title>
+
 <style>
     body {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -50,6 +51,18 @@
 
     .menu a {
         text-decoration: none;
+        --btn-scale: 1; /* default scale */
+    }
+
+    /* Preferred / detected platform */
+    .menu a.preferred {
+        --btn-scale: 1.05;
+    }
+
+    /* Non-detected platform */
+    .menu a.secondary {
+        --btn-scale: 0.92;
+        opacity: 0.85;
     }
 
     .menu button {
@@ -57,7 +70,6 @@
         padding: 14px;
         border-radius: 12px;
         border: none;
-        background: linear-gradient(135deg, #5b7cfa, #8f5bfa);
         color: white;
         font-size: 1.1rem;
         cursor: pointer;
@@ -67,11 +79,18 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
+
+        transform: scale(var(--btn-scale));
     }
 
-    /* Platform-specific button styles */
+    .menu button:hover {
+        transform: scale(var(--btn-scale)) translateY(-2px);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+
+    /* Platform-specific styles */
     .menu a.windows button {
-        background: #0078D7; /* Windows blue */
+        background: #0078D7;
         color: #ffffff;
     }
 
@@ -80,21 +99,13 @@
     }
 
     .menu a.mac button {
-        background: #ffffff; /* White background for macOS */
+        background: #ffffff;
         color: #000000;
         box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     .menu a.mac button:hover {
-        transform: translateY(-2px);
         box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-    }
-
-    .menu button .icon {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        flex: 0 0 20px;
     }
 
     .menu button img.icon {
@@ -104,13 +115,7 @@
         display: inline-block;
     }
 
-    .menu button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-    }
-
     .github {
-        margin-top: 0;
         display: flex;
         justify-content: center;
     }
@@ -141,20 +146,26 @@
     }
 </style>
 </head>
+
 <body>
 <div class="container">
     <h1>GD 2.2074 Downgrade Guides</h1>
     <p>Select your platform</p>
 
     <div class="menu">
-        <a class="windows" href="win.html"><button>
-            <img class="icon" src="resources/windows.png" alt="Windows logo">
-            <span>Windows</span>
-        </button></a>
-        <a class="mac" href="mac.html"><button>
-            <img class="icon" src="resources/apple.png" alt="Apple logo">
-            <span>MacOS</span>
-        </button></a>
+        <a class="windows" href="win.html">
+            <button>
+                <img class="icon" src="resources/windows.png" alt="Windows logo">
+                <span>Windows</span>
+            </button>
+        </a>
+
+        <a class="mac" href="mac.html">
+            <button>
+                <img class="icon" src="resources/apple.png" alt="Apple logo">
+                <span>MacOS</span>
+            </button>
+        </a>
     </div>
 </div>
 
@@ -179,5 +190,40 @@
         <span>Source</span>
     </a>
 </div>
+<script>
+(function () {
+    const platform = navigator.platform.toLowerCase();
+
+    const menu = document.querySelector(".menu");
+    const windowsBtn = menu.querySelector("a.windows");
+    const macBtn = menu.querySelector("a.mac");
+
+    let preferred, secondary;
+
+    if (platform.includes("win")) {
+        preferred = windowsBtn;
+        secondary = macBtn;
+    } else if (platform.includes("mac")) {
+        preferred = macBtn;
+        secondary = windowsBtn;
+    } else {
+        return;
+    }
+
+    menu.prepend(preferred);
+
+    preferred.classList.add("preferred");
+    secondary.classList.add("secondary");
+
+    const divider = document.createElement("div");
+    divider.setAttribute("aria-hidden", "true");
+    divider.style.height = "1px";
+    divider.style.background = "rgba(255, 255, 255, 0.2)";
+    divider.style.margin = "4px 0";
+    divider.style.borderRadius = "1px";
+    menu.insertBefore(divider, secondary);
+
+})();
+</script>
 </body>
 </html>
