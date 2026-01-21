@@ -24,6 +24,28 @@
 
     h1 {
         margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    h1 img {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    .apple-logo {
+        filter: brightness(0) saturate(100%) invert(100%);
+    }
+
+    .steam-logo {
+        display: inline;
+        height: 1em;
+        vertical-align: -0.125em;
+        margin-right: 4px;
+        transform: scale(1.25);
+        transform-origin: left center;
     }
 
     h2 {
@@ -126,17 +148,77 @@
         fill: currentColor;
     }
 
+    .warning {
+        display: none;
+        background: rgba(220, 38, 38, 0.1);
+        border: 1px solid rgba(220, 38, 38, 0.4);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .warning.show {
+        display: flex;
+    }
+
+    .warning-icon {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .warning-content {
+        flex: 1;
+    }
+
+    .warning-text {
+        margin: 0;
+        color: #fca5a5;
+        font-size: 0.95em;
+    }
+
+    .warning-button {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(220, 38, 38, 0.2);
+        color: #fca5a5;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        white-space: nowrap;
+    }
+
+    .warning-button:hover {
+        background: rgba(220, 38, 38, 0.3);
+    }
+
 </style>
 </head>
 <body>
 <div class="container">
 
-    <h1>macOS Guide for Downgrading to <strong>2.2074</strong></h1>
+    <div class="warning" id="osWarning">
+        <div class="warning-icon">⚠️</div>
+        <div class="warning-content">
+            <p class="warning-text" id="warningText"></p>
+        </div>
+        <button class="warning-button" id="warningButton"></button>
+    </div>
+
+    <h1><img src="resources/apple.png" alt="Apple" class="apple-logo">macOS Guide for Downgrading to <strong>2.2074</strong></h1>
 
     <hr>
 
     <p>
-        <strong>You must own Geometry Dash on Steam for this guide to work.</strong>
+        <strong>You must own Geometry Dash on <img src="resources/steam.png" alt="Steam" class="steam-logo"> Steam for this guide to work.</strong>
         <br>
         It is recommended to save your account data to the cloud before proceeding with this guide.
     </p>
@@ -144,9 +226,9 @@
     <hr>
 
     <p>
-        Open any web browser (such as Safari) and enter
+        <a href="steam://open/console">Click here</a> to open the Steam console, or enter
         <code>steam://open/console</code>
-        in the address bar (or <a href="steam://open/console">click here</a>) to open the Steam console.
+        in the address bar of Safari or another browser.
     </p>
 
     <p>
@@ -235,5 +317,48 @@
     </div>
 
 </div>
+</body>
+<script>
+function detectOS() {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('win') > -1) return 'windows';
+    if (ua.indexOf('mac') > -1) return 'macos';
+    return null;
+}
+
+function initializeWarning() {
+    const currentOS = detectOS();
+    const isWindowsPage = window.location.pathname.includes('win.html');
+    const isMacPage = window.location.pathname.includes('mac.html');
+    
+    const warningEl = document.getElementById('osWarning');
+    const warningText = document.getElementById('warningText');
+    const warningButton = document.getElementById('warningButton');
+    
+    let shouldShowWarning = false;
+    let targetPage = '';
+    
+    if (isWindowsPage && currentOS === 'macos') {
+        shouldShowWarning = true;
+        warningText.textContent = 'You appear to be on macOS. Did you mean to view the macOS guide?';
+        warningButton.textContent = 'View macOS Guide';
+        targetPage = 'mac.html';
+    } else if (isMacPage && currentOS === 'windows') {
+        shouldShowWarning = true;
+        warningText.textContent = 'You appear to be on Windows. Did you mean to view the Windows guide?';
+        warningButton.textContent = 'View Windows Guide';
+        targetPage = 'win.html';
+    }
+    
+    if (shouldShowWarning) {
+        warningEl.classList.add('show');
+        warningButton.addEventListener('click', () => {
+            window.location.href = targetPage;
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeWarning);
+</script>
 </body>
 </html>
