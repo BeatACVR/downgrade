@@ -7,7 +7,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://beatacvr.github.io/downgrade">
 
-<title>Windows Downgrade Guide</title>
+<title>Linux Downgrade Guide</title>
 <style>
     body {
         font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
@@ -215,7 +215,7 @@
         pointer-events: none;
         user-select: none;
     }
-    
+
 </style>
 </head>
 <body>
@@ -230,7 +230,7 @@
         <button class="warning-button" id="warningButton"></button>
     </div>
 
-    <h1><img src="resources/windows.png" alt="Windows" class="windows-logo">Windows Guide for Downgrading to <strong>2.2074</strong></h1>
+    <h1><img src="resources/linux.png" alt="Linux" class="linux-logo">Linux Guide for Downgrading to <strong>2.2074</strong></h1>
 
     <hr>
 
@@ -242,14 +242,14 @@
     <hr>
 
     <div class="footnote">
-        Note: This guide assumes Geometry Dash is installed to the default Steam install location. 
+        Note: This guide assumes Geometry Dash is installed to the default Steam install location.
         If Geometry Dash is stored somewhere else, the paths you need to use will be different.
     </div>
 
     <p class="step">
-        <a href="steam://open/console">Click here</a> to open the Steam console, or enter
-        <code>steam://open/console</code>
-        in the address bar of Edge or another browser.
+        <a href="steam://open/console">Click here</a> to open the Steam console, or type
+        <code>xdg-open steam://open/console</code>
+        in your terminal.
     </p>
 
     <p class="step">
@@ -265,12 +265,12 @@
     </p>
 
     <p class="step">
-        Open File Explorer and navigate to the following folder:
+        Open  and navigate to the following folder:
     </p>
 
     <ul>
         <li>
-            C:\Program Files (x86)\Steam\steamapps\content\app_322170\depot_322171
+            ~/.local/share/Steam/steamapps/content/app_322170/depot_322171
         </li>
     </ul>
 
@@ -284,7 +284,7 @@
 
     <ul>
         <li>
-            C:\Program Files (x86)\Steam\steamapps\common\Geometry Dash
+            ~/.local/share/Steam/steamapps/common/Geometry Dash
         </li>
     </ul>
 
@@ -293,20 +293,14 @@
     </p>
 
     <p class="step">
-        To prevent Steam from automatically updating Geometry Dash, go to:
+        To prevent Steam from automatically updating Geometry Dash, type this in your terminal to make the manifest file read only:
     </p>
 
     <ul>
         <li>
-            C:\Program Files (x86)\Steam\steamapps
+            chmod 444 ~/.local/share/Steam/steamapps/appmanifest_322170.acf
         </li>
     </ul>
-
-    <p>
-        Right-click <code>appmanifest_322170.acf</code>, select <strong>Properties</strong>,
-        enable the <strong>Read-only</strong> checkbox, click <strong>Apply</strong>,
-        then press <strong>OK</strong>.
-    </p>
 
     <h2>After Downgrading</h2>
     <p>
@@ -317,8 +311,8 @@
 
     <p class="step">
         If Geometry Dash receives a new update, you will need to launch it through <code>GeometryDash.exe</code> in
-        the game's folder, or temporarily remove <strong>Read-only</strong> from <code>appmanifest_322170.acf</code> to
-        update Geometry Dash then follow this guide to downgrade it again.
+        the game's folder, or run <code>chmod 644 ~/.local/share/Steam/steamapps/appmanifest_322170.acf</code> to temporarily make the file writeable to
+        update Geometry Dash, then follow this guide to downgrade it again.
     </p>
 
     <div class="back">
@@ -361,14 +355,14 @@ function initializeWarning() {
     const currentOS = detectOS();
     const isWindowsPage = window.location.pathname.includes('win.html');
     const isMacPage = window.location.pathname.includes('mac.html');
-    
+
     const warningEl = document.getElementById('osWarning');
     const warningText = document.getElementById('warningText');
     const warningButton = document.getElementById('warningButton');
-    
+
     let shouldShowWarning = false;
     let targetPage = '';
-    
+
     if (isWindowsPage && currentOS === 'macos') {
         shouldShowWarning = true;
         warningText.textContent = 'You appear to be on macOS. Did you mean to view the macOS guide?';
@@ -380,7 +374,7 @@ function initializeWarning() {
         warningButton.textContent = 'View Windows Guide';
         targetPage = 'win.html';
     }
-    
+
     if (shouldShowWarning) {
         warningEl.classList.add('show');
         warningButton.addEventListener('click', () => {
