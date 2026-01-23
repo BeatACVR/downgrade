@@ -212,25 +212,39 @@
     const platform = navigator.platform.toLowerCase();
 
     const menu = document.querySelector(".menu");
-    const windowsBtn = menu.querySelector("a.windows");
-    const macBtn = menu.querySelector("a.mac");
+    if (!menu) return;
 
-    let preferred, secondary;
+    const buttons = {
+        windows: menu.querySelector("a.windows"),
+        mac: menu.querySelector("a.mac"),
+        linux: menu.querySelector("a.linux")
+    };
+
+    Object.keys(buttons).forEach(key => {
+        if (!buttons[key]) delete buttons[key];
+    });
+
+    let preferredKey;
 
     if (platform.includes("win")) {
-        preferred = windowsBtn;
-        secondary = macBtn;
+        preferredKey = "windows";
     } else if (platform.includes("mac")) {
-        preferred = macBtn;
-        secondary = windowsBtn;
+        preferredKey = "mac";
+    } else if (platform.includes("linux")) {
+        preferredKey = "linux";
     } else {
         return;
     }
 
-    menu.prepend(preferred);
+    const preferred = buttons[preferredKey];
+    const secondary = Object.values(buttons).filter(btn => btn !== preferred);
 
+    Object.values(buttons).forEach(btn => {
+        btn.classList.remove("preferred", "secondary");
+    });
+
+    menu.prepend(preferred);
     preferred.classList.add("preferred");
-    secondary.classList.add("secondary");
 
     const divider = document.createElement("div");
     divider.setAttribute("aria-hidden", "true");
@@ -238,7 +252,9 @@
     divider.style.background = "rgba(255, 255, 255, 0.2)";
     divider.style.margin = "4px 0";
     divider.style.borderRadius = "1px";
-    menu.insertBefore(divider, secondary);
+
+    menu.insertBefore(divider, secondary[0]);
+    secondary.forEach(btn => btn.classList.add("secondary"));
 
 })();
 </script>
