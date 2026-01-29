@@ -237,121 +237,77 @@
       <hr>
 
       <p>
-        <strong>You must own Geometry Dash on <img src="resources/steam.png" alt="Steam" class="steam-logo">Steam for this guide to work.</strong><br>
+        <strong>You must own Geometry Dash on <img src="resources/steam.png" alt="Steam" class="steam-logo"> Steam for this guide to work.</strong><br>
         It is recommended to save your account data to the cloud before proceeding with this guide.
       </p>
 
       <hr>
 
+      <p class="step">
+      <a href="https://github.com/SteamRE/DepotDownloader/releases">Click here</a> to download DepotDownloader, which is the tool we are going to use to download 2.2074 from Steam. If you have a 64 bit processor, the one you should choose is <code>linux-x64</code>. If you have an ARM-based 64 bit processor, choose <code>linux-arm64</code>. If you have an ARM-based 32 bit processor, choose <code>linux-arm</code>.
+      </p>
+
+      <p class="step">
+      	Extract the ZIP file to get the DepotDownloader executable.
+      </p>
+
+      <p class="step">
+      Paste the following command into the terminal in the path where DepotDownloader is downloaded (make sure to <code>cd</code> into it) and press Enter:
+      </p>
+
+      <ul>
+        <li>./DepotDownloader -app 322170 -depot 322171 -manifest 7678373534998244044 -username [USERNAME] -password [PASSWORD]</li>
+      </ul>
+      
       <div class="footnote">
-        Note: This guide assumes Geometry Dash is installed to the default Steam install location.
-        If Geometry Dash is stored somewhere else, the paths you need to use will be different.
+	      Tip: Type your Steam username in place of <code>[USERNAME]</code> argument and Steam password in place <code>[PASSWORD]</code>. DepotDownloader is open source and is considered safe, and it only sends your login information to Steam itself to pull the game from Steam. Add <code>-remember-password</code> at the end if you want DepotDownloader to remember your Steam account's password in the future.
       </div>
-
-      <p class="step">
-        <a href="steam://open/console">Click here</a> to open the Steam console, or type
-        <code>xdg-open steam://open/console</code>
-        in your terminal.
-      </p>
-
-      <p class="step">
-        Paste the following command into the console and press Enter:
+      <p>
+      	If you want to login with Steam Guard QR instead:
       </p>
 
       <ul>
-        <li>download_depot 322170 322171 7678373534998244044</li>
+	<li>./DepotDownloader -app 322170 -depot 322171 -manifest 7678373534998244044 -qr</li>
       </ul>
 
       <p class="step">
-        Wait for Steam to finish downloading the depot.
+        Wait for DepotDownloader to finish downloading the depot.
       </p>
 
       <p class="step">
-        Open  and navigate to the following folder:
-      </p>
-
-      <ul>
-        <li>
-          ~/.local/share/Steam/ubuntu12_32/steamapps/content/app_322170/depot_322171
-        </li>
-      </ul>
-      <p> If <code>~/.local/share/Steam</code> doesn't exist in your distro's Steam package, check this directory:
-      </p>
-      <ul>
-        <li>~/.steam/steam/ubuntu12_32/steamapps/content/app_322170/depot_322171</li>
-      <p> Or if you have Steam installed as a Flatpak (make sure Steam has the filesystem access permission):
-      </p>
-      <ul>
-        <li>~/.var/app/com.valvesoftware.Steam/data/Steam/ubuntu12_32/steamapps/content/app_322170/depot_322171</li>
-      </ul>
-
-      <div class="footnote">
-        Tip: <code>~</code> represents your <code>/home/username</code> folder on Linux.
-    </div>
-
-      <p class="step">
-        Copy <strong>everything inside</strong> this folder.
+      	Go to the folder DepotDownloader created (322170), then the folder inside of it.
       </p>
 
       <p class="step">
-        Go to the Geometry Dash installation directory:
-      </p>
-
-      <ul>
-        <li>
-          ~/.local/share/Steam/steamapps/common/Geometry Dash
-        </li>
-      </ul>
-
-      <p> If <code>~/.local/share/Steam</code> doesn't exist: </p>
-
-      <ul>
-        <li>
-        ~/.steam/steam/steamapps/common/Geometry Dash
-      </ul>
-
-      <p>Or if you have Flatpak Steam:</p>
-
-      <ul>
-        <li>
-          ~/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/common/Geometry Dash
-      </ul>
-
-      <p class="step">
-        Paste the files and replace all existing files if prompted.
+        Copy <strong>everything inside</strong> of this folder.
       </p>
 
       <p class="step">
-        To prevent Steam from automatically updating Geometry Dash, type this in your terminal to make the manifest file read only:
+      Go to the Geometry Dash installation directory by going to your Steam library, right clicking on Geometry Dash, clicking on <strong>Manage</strong>, then clicking on <strong>Browse local files</strong>.
+      </p>
+
+      <p class="step">
+        Paste the files you copied from your depot and replace all existing files if prompted.
+      </p>
+
+      <p class="step">
+      To prevent Steam from automatically updating Geometry Dash, do the previous step to open the Geometry Dash folder, exit 2 folders (<code>Geometry Dash</code>, then <code>common</code>), and make sure you're in the <code>steamapps</code> folder. In the <code>steamapps</code> folder, you should see a file named <code>appmanifest_322170.acf</code>. We need to make that file read only. To do that via the terminal, open the terminal inside of the <code>steamapps</code> folder, then type this:
       </p>
 
       <ul>
-        <li>
-          chmod 444 ~/.local/share/Steam/steamapps/appmanifest_322170.acf
-        </li>
+	<li>chmod 444 appmanifest_322170.acf</li>
       </ul>
-
-      <p>If <code>~/.local/share/Steam</code> doesn't exist:
-      <ul>
-        <li>
-          chmod 444 ~/.steam/steam/steamapps/appmanifest_322170.acf
-      </ul>
-      <p>Or if you have Flatpak Steam:</p>
-       <ul>
-        <li>
-          chmod 444 ~/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/appmanifest_322170.acf
-       </ul>
 
       <h2>After Downgrading</h2>
       <p>
         You can now launch Geometry Dash through Steam and optionally install
-        <strong>Geode v4.10.1</strong> from
+        <strong>Geode v4.10.2</strong> from
         <a href="https://geode-sdk.org/install" target="_blank">the Geode website</a>.
       </p>
 
       <p class="step">
         If Geometry Dash receives a new update, you will need to launch it through <code>GeometryDash.exe</code> in
-        the game's folder, or run <code>chmod 644 steampath/appmanifest_322170.acf</code> (check the previous steps to determine your Steam folder path) to temporarily make the file writeable to
+        the game's folder, or run <code>chmod 644 appmanifest_322170.acf</code> (check the previous steps to find the steamapps folder which is where this file is stored) to temporarily make the file writeable to
         update Geometry Dash, then follow this guide to downgrade it again.
       </p>
 
