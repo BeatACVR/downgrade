@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta property="og:title" content="GD 2.2074 Downgrade Guide (iOS)">
+<meta property="og:description" content="Step-by-step guide to downgrade Geometry Dash to version 2.2074.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://beatacvr.github.io/downgrade">
+
+<title>iOS Downgrade Guide</title>
+<style>
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #1e1e2f;
+        color: #eaeaf0;
+        margin: 0;
+        padding: 40px;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    h1 {
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    h1 img {
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+
+    .windows-logo {
+        filter: brightness(0) saturate(100%) invert(56%) sepia(73%) saturate(440%) hue-rotate(187deg) brightness(96%) contrast(87%);
+    }
+
+    .steam-logo {
+        display: inline;
+        height: 1em;
+        vertical-align: -0.125em;
+        margin-right: 4px;
+        transform: scale(1.25);
+        transform-origin: left center;
+    }
+
+    h2 {
+        margin-top: 36px;
+        margin-bottom: 12px;
+    }
+
+    p {
+        line-height: 1.7;
+        opacity: 0.92;
+        margin-bottom: 16px;
+    }
+
+    a {
+        color: #8f9bff;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    code {
+        background: #2d2d45;
+        padding: 3px 7px;
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 0.95em;
+    }
+
+    ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 12px 0 6px;
+    }
+
+    ul li {
+        background: rgba(255,255,255,0.06);
+        padding: 12px 16px;
+        border-radius: 10px;
+        margin-bottom: 6px;
+        font-family: ui-monospace, SFMono-Regular, monospace;
+        font-size: 0.95em;
+        word-break: break-all;
+    }
+
+    .back {
+        margin-top: 48px;
+    }
+
+    .back button {
+        padding: 12px 22px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, #5b7cfa, #8f5bfa);
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    }
+
+    .back button:hover {
+        transform: translateY(-1px);
+    }
+
+    .github {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .github a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.08);
+        color: #eaeaf0;
+        text-decoration: none;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        transition: transform 0.15s, background 0.15s;
+    }
+
+    .github a:hover {
+        transform: translateY(-1px);
+        background: rgba(255,255,255,0.12);
+    }
+
+    .github svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
+    }
+
+    .warning {
+        display: none;
+        background: rgba(220, 38, 38, 0.1);
+        border: 1px solid rgba(220, 38, 38, 0.4);
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .warning.show {
+        display: flex;
+    }
+
+    .warning-icon {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+    }
+
+    .warning-content {
+        flex: 1;
+    }
+
+    .warning-text {
+        margin: 0;
+        color: #fca5a5;
+        font-size: 0.95em;
+    }
+
+    .warning-button {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        border-radius: 8px;
+        border: none;
+        background: rgba(220, 38, 38, 0.2);
+        color: #fca5a5;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background 0.15s;
+        white-space: nowrap;
+    }
+
+    .warning-button:hover {
+        background: rgba(220, 38, 38, 0.3);
+    }
+
+    .steps {
+        counter-reset: step;
+    }
+
+    .step {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .step::before {
+        counter-increment: step;
+        content: counter(step);
+        position: absolute;
+        left: -42px;
+        top: -0.1em;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: rgba(234, 234, 240, 0.30);
+        pointer-events: none;
+        user-select: none;
+    }
+    
+</style>
+</head>
+<body>
+<div class="container">
+<div class="steps">
+
+    <div class="warning" id="osWarning">
+        <div class="warning-icon">⚠️</div>
+        <div class="warning-content">
+            <p class="warning-text" id="warningText"></p>
+        </div>
+        <button class="warning-button" id="warningButton"></button>
+    </div>
+
+    <h1>iOS Guide for Downgrading to <strong>2.2074</strong></h1>
+
+    <hr>
+
+    <p>
+        <strong>You must own Geometry Dash on the App Store for this guide to work.</strong><br>
+        It is recommended to save your account data to the cloud before proceeding with this guide.
+    </p>
+
+    <hr>
+
+    <div class="footnote">
+        Note: This guide assumes you are downgrading to be able to use Geode, and have an app to sideload apps (such as SideStore, LiveContainer, free certificates and etc.)
+    </div>
+
+    <p class="step">
+    Start by <strong>saving your data</strong> in Geometry Dash and <strong>uninstalling</strong> Geometry Dash.
+    </p>
+
+    <p class="step">
+        <a href="https://github.com/jailbreakdotparty/PancakeStore/releases/">Click here</a> to download the PancakeStore IPA file.    
+    </p>
+
+    <p class="step">
+    Sideload <strong>PancakeStore</strong> using the sideloader of choice.
+    </p>
+
+    <p class="step">
+    Open <strong>PancakeStore</strong> and login to your <strong>Apple ID</strong>. If you don't get a 2FA code, type in a <strong>random six length number</strong> (123456 works) in the 2FA code field in the app. 
+    </p>
+
+    <p class="step">
+    Use this link for the <strong>Link to App Store App</strong> field:
+    </p>
+
+    <ul>
+	<li>https://apps.apple.com/us/app/geometry-dash/id625334537</li>
+    </ul>
+    <p class="step">
+    Press <strong>Downgrade App</strong> and choose the <strong>Server</strong> option, then press <strong>2.207</strong>. It might take a while for it to start downgrading.
+    </p>
+
+    <p class="step">
+    When prompted to open in iTunes, press <strong>Yes</strong> and press <strong>Install</strong>. After that, you can exit <strong>PancakeStore</strong> and Geometry Dash will be installed.
+    </p>
+
+    <h2>To get back to 2.2081</h2>
+    <p>
+    Simply <strong>uninstall</strong> Geometry Dash and <strong>reinstall</strong> it from the App Store. Save your data before doing this to prevent data loss.
+    </p>
+
+    <div class="back">
+        <a href="index.html"><button>← Back to Home</button></a>
+    </div>
+
+    <div class="github">
+        <a href="https://github.com/beatacvr/downgrade" target="_blank">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87
+                2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+                0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12
+                0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82
+                2.2-.82.44 1.1.16 1.92.08 2.12
+                .51.56.82 1.27.82 2.15
+                0 3.07-1.87 3.75-3.65 3.95
+                .29.25.54.73.54 1.48
+                0 1.07-.01 1.93-.01 2.2
+                0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8
+                c0-4.42-3.58-8-8-8Z"/>
+            </svg>
+            <span>Source Code</span>
+        </a>
+    </div>
+</div>
+</div>
+<script>
+function detectOS() {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.indexOf('win') > -1) return 'windows';
+    if (ua.indexOf('mac') > -1) return 'macos';
+    if (ua.indexOf('linux') > -1) return 'linux';
+    return null;
+}
+
+function initializeWarning() {
+    const currentOS = detectOS();
+
+    const pages = {
+        windows: {
+            match: 'win.html',
+            label: 'Windows',
+            file: 'win.html'
+        },
+        macos: {
+            match: 'mac.html',
+            label: 'macOS',
+            file: 'mac.html'
+        },
+        linux: {
+            match: 'linux.html',
+            label: 'Linux',
+            file: 'linux.html'
+        },
+        android: {
+            match: 'android.html',
+            label: 'Android',
+            file: 'android.html'
+        }
+    };
+
+    const warningEl = document.getElementById('osWarning');
+    const warningText = document.getElementById('warningText');
+    const warningButton = document.getElementById('warningButton');
+
+    const currentPageOS = Object.keys(pages).find(os =>
+        window.location.pathname.includes(pages[os].match)
+    );
+
+    if (!currentPageOS || currentPageOS === currentOS) {
+        return;
+    }
+
+    const detected = pages[currentOS];
+    const target = pages[currentOS];
+
+    warningText.textContent = `You appear to be on ${detected.label}. Did you mean to view the ${detected.label} guide?`;
+    warningButton.textContent = `View ${detected.label} Guide`;
+
+    warningEl.classList.add('show');
+    warningButton.addEventListener('click', () => {
+        window.location.href = target.file;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initializeWarning);
+</script>
+<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+</body>
+</html>
