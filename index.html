@@ -117,6 +117,16 @@
         background: #090909;
     }
 
+    .menu a.ios button {
+        background: #ffffff;
+        color: #000000;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .menu a.ios button:hover {
+        box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+    }
+
     .menu a.android button {
         background: #3DDC84;
         color: #000000;
@@ -188,7 +198,7 @@
 
         <a class="mac" href="mac.html">
             <button>
-                <img class="icon" src="resources/apple.png" alt="Apple logo">
+                <img class="icon" src="resources/finder.png" alt="Mac logo">
                 <span>MacOS</span>
             </button>
         </a>
@@ -204,6 +214,13 @@
             <button>
                 <img class="icon" src="resources/linux2.png" alt="Linux logo">
                 <span>Linux</span>
+            </button>
+        </a>
+
+        <a class="ios" href="ios.html">
+            <button>
+                <img class="icon" src="resources/apple.png" alt="iOS logo">
+                <span>iOS</span>
             </button>
         </a>
 
@@ -233,7 +250,7 @@
 </div>
 <div class="credits">
     Windows, Mac, Android guides created by @beat___<br>
-    Linux guide created by @slideglide
+    iOS, Linux guides created by @slideglide
 </div>
 <script>
 (function () {
@@ -246,7 +263,8 @@
         windows: menu.querySelector("a.windows"),
         mac: menu.querySelector("a.mac"),
         linux: menu.querySelector("a.linux"),
-        android: menu.querySelector("a.android")
+        android: menu.querySelector("a.android"),
+        ios: menu.querySelector("a.ios")
     };
 
     Object.keys(buttons).forEach(key => {
@@ -263,6 +281,8 @@
         preferredKey = "linux";
     } else if (platform.includes("android")) {
         preferredKey = "android";
+    } else if (platform.includes("ios")) {
+        preferredKey = "ios";
     } else {
         return;
     }
