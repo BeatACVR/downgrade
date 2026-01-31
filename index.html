@@ -255,8 +255,6 @@
 </div>
 <script>
 (function () {
-    const platform = navigator.platform.toLowerCase();
-
     const menu = document.querySelector(".menu");
     if (!menu) return;
 
@@ -272,21 +270,41 @@
         if (!buttons[key]) delete buttons[key];
     });
 
-    let preferredKey;
+    function detectPlatform() {
+        // modern browser platform detection
+        if (navigator.userAgentData && navigator.userAgentData.platform) {
+            const p = navigator.userAgentData.platform.toLowerCase();
 
-    if (platform.includes("win")) {
-        preferredKey = "windows";
-    } else if (platform.includes("mac")) {
-        preferredKey = "mac";
-    } else if (platform.includes("linux")) {
-        preferredKey = "linux";
-    } else if (platform.includes("android")) {
-        preferredKey = "android";
-    } else if (platform.includes("ios")) {
-        preferredKey = "ios";
-    } else {
-        return;
+            if (p.includes("win")) return "windows";
+            if (p.includes("mac")) return "mac";
+            if (p.includes("linux")) return "linux";
+            if (p.includes("android")) return "android";
+            if (p.includes("ios")) return "ios";
+        }
+
+        // ios detection
+        const ua = navigator.userAgent;
+        const platform = navigator.platform;
+
+        const isIOS =
+            /iPad|iPhone|iPod/.test(ua) ||
+            (platform === "MacIntel" && navigator.maxTouchPoints > 1);
+
+        if (isIOS) return "ios";
+
+        // fallback
+        const uaLower = ua.toLowerCase();
+
+        if (uaLower.includes("android")) return "android";
+        if (uaLower.includes("win")) return "windows";
+        if (uaLower.includes("mac")) return "mac";
+        if (uaLower.includes("linux")) return "linux";
+
+        return null;
     }
+
+    const preferredKey = detectPlatform();
+    if (!preferredKey || !buttons[preferredKey]) return;
 
     const preferred = buttons[preferredKey];
     const secondary = Object.values(buttons).filter(btn => btn !== preferred);
@@ -298,16 +316,17 @@
     menu.prepend(preferred);
     preferred.classList.add("preferred");
 
-    const divider = document.createElement("div");
-    divider.setAttribute("aria-hidden", "true");
-    divider.style.height = "1px";
-    divider.style.background = "rgba(255, 255, 255, 0.2)";
-    divider.style.margin = "4px 0";
-    divider.style.borderRadius = "1px";
+    if (secondary.length) {
+        const divider = document.createElement("div");
+        divider.setAttribute("aria-hidden", "true");
+        divider.style.height = "1px";
+        divider.style.background = "rgba(255, 255, 255, 0.2)";
+        divider.style.margin = "4px 0";
+        divider.style.borderRadius = "1px";
 
-    menu.insertBefore(divider, secondary[0]);
-    secondary.forEach(btn => btn.classList.add("secondary"));
-
+        menu.insertBefore(divider, secondary[0]);
+        secondary.forEach(btn => btn.classList.add("secondary"));
+    }
 })();
 </script>
 <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
