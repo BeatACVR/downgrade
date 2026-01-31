@@ -316,15 +316,41 @@
 </div>
 <script>
 function detectOS() {
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.indexOf('win') > -1) return 'windows';
-    if (ua.indexOf('mac') > -1) return 'macos';
-    if (ua.indexOf('linux') > -1) return 'linux';
+    // modern browser platform detection
+    if (navigator.userAgentData && navigator.userAgentData.platform) {
+        const p = navigator.userAgentData.platform.toLowerCase();
+
+        if (p.includes('win')) return 'windows';
+        if (p.includes('mac')) return 'macos';
+        if (p.includes('android')) return 'android';
+        if (p.includes('ios')) return 'ios';
+        if (p.includes('linux')) return 'linux';
+    }
+
+    // 2. ios detection
+    const ua = navigator.userAgent;
+    const platform = navigator.platform;
+
+    const isIOS =
+        /iPad|iPhone|iPod/.test(ua) ||
+        (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+    if (isIOS) return 'ios';
+
+    // fallback
+    const uaLower = ua.toLowerCase();
+
+    if (uaLower.includes('android')) return 'android';
+    if (uaLower.includes('win')) return 'windows';
+    if (uaLower.includes('mac')) return 'macos';
+    if (uaLower.includes('linux')) return 'linux';
+
     return null;
 }
 
 function initializeWarning() {
     const currentOS = detectOS();
+    if (!currentOS) return;
 
     const pages = {
         windows: {
@@ -346,6 +372,11 @@ function initializeWarning() {
             match: 'android.html',
             label: 'Android',
             file: 'android.html'
+        },
+        ios: {
+            match: 'ios.html',
+            label: 'iOS',
+            file: 'ios.html'
         }
     };
 
@@ -353,23 +384,26 @@ function initializeWarning() {
     const warningText = document.getElementById('warningText');
     const warningButton = document.getElementById('warningButton');
 
+    if (!warningEl || !warningText || !warningButton) return;
+
     const currentPageOS = Object.keys(pages).find(os =>
         window.location.pathname.includes(pages[os].match)
     );
 
-    if (!currentPageOS || currentPageOS === currentOS) {
-        return;
-    }
+    if (!currentPageOS || currentPageOS === currentOS) return;
 
     const detected = pages[currentOS];
-    const target = pages[currentOS];
 
-    warningText.textContent = `You appear to be on ${detected.label}. Did you mean to view the ${detected.label} guide?`;
-    warningButton.textContent = `View ${detected.label} Guide`;
+    warningText.textContent =
+        `You appear to be on ${detected.label}. Did you mean to view the ${detected.label} guide?`;
+
+    warningButton.textContent =
+        `View ${detected.label} Guide`;
 
     warningEl.classList.add('show');
+
     warningButton.addEventListener('click', () => {
-        window.location.href = target.file;
+        window.location.href = detected.file;
     });
 }
 
