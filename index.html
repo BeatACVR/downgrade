@@ -181,10 +181,49 @@
         text-align: center;
         letter-spacing: 0.2px;
     }
+
+    .warning {
+      display: flex;
+      background: rgba(38, 220, 47, 0.1);
+      border: 1px solid rgba(38, 220, 53, 0.4);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .warning-icon {
+      flex-shrink: 0;
+      width: 5%;
+      height: 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: hue-rotate(100deg) saturate(180%) brightness(200%);
+    }
+
+    .warning-content {
+      flex: 1;
+    }
+
+    .warning-text {
+      margin: 0;
+      color: #affca5;
+      font-size: 0.95em;
+    }
 </style>
 </head>
 
 <body>
+
+<div class="warning">
+    <img class= "warning-icon" src="resources/exclamation.png"></img>
+    <div class="warning-content">
+        <p class="warning-text" id="warningText">Geode v5 for Geometry Dash 2.2081 is now available.<br>Read the bottom of your platform's guide to learn how to update.</p>
+    </div>
+</div>
+
 <div class="container">
     <h1>GD 2.2074 Downgrade Guides</h1>
     <p>Select your platform</p>
