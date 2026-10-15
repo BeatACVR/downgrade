@@ -29,8 +29,8 @@
         padding: 40px;
         padding-top: 20px;
         border-radius: 16px;
-        width: 90%;
-        max-width: 420px;
+        box-sizing: border-box;
+        width: min(calc(100% - 32px), 500px);
         box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         text-align: center;
     }
@@ -184,33 +184,67 @@
 
     .warning {
       display: flex;
-      background: rgba(36, 244, 47, 0.195);
-      border: 1px solid rgba(52, 247, 68, 0.4);
+      box-sizing: border-box;
+      width: min(calc(100% - 32px), 500px);
+      background: rgba(255, 204, 0, 0.18);
+      border: 1px solid rgba(255, 204, 0, 0.4);
       border-radius: 10px;
-      padding: 16px 20px;
-      margin-bottom: 24px;
+      padding: 14px 16px;
+      margin-bottom: 4px;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .warning-icon {
-      flex-shrink: 0;
-      width: 5%;
-      height: 5%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      filter: hue-rotate(100deg) saturate(180%) brightness(200%);
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      filter: hue-rotate(62deg) saturate(75%) brightness(300%);
     }
 
     .warning-content {
       flex: 1;
+      min-width: 0;
     }
 
     .warning-text {
       margin: 0;
-      color: #9dff90;
+      color: #ffe27a;
       font-size: 0.95em;
+      line-height: 1.4;
+      opacity: 1;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 0;
+        box-sizing: border-box;
+      }
+
+      .warning {
+        padding: 12px 14px;
+        gap: 12px;
+      }
+
+      .warning-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .warning-text {
+        font-size: 0.9em;
+      }
+
+      .container {
+        padding: 20px;
+        padding-top: 12px;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
     }
 </style>
 </head>
@@ -218,7 +252,7 @@
 <body>
 
 <div class="warning">
-    <img class= "warning-icon" src="resources/exclamation.png"></img>
+    <img class="warning-icon" src="resources/exclamation.png" alt="">
     <div class="warning-content">
         <p class="warning-text" id="warningText">These guides have been updated for Geometry Dash 2.209, but they have not been tested yet.</p>
     </div>
