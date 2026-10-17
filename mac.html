@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta property="og:title" content="GD 2.2081 Downgrade Guide (MacOS)">
 <meta property="og:description" content="Step-by-step guide to downgrade Geometry Dash to version 2.2081. (or upgrade from 2.2081 to 2.2091)">
 <meta property="og:type" content="website">
@@ -219,6 +220,50 @@
         user-select: none;
     }
 
+    /* mobile */
+    @media (max-width: 600px) {
+        body {
+            padding: 20px 16px 24px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+        }
+
+        h2 {
+            margin-top: 28px;
+        }
+
+        .step,
+        ul {
+            margin-left: 28px;
+        }
+
+        .step ~ .footnote {
+            margin-left: 34px;
+        }
+
+        .step::before {
+            left: -28px;
+            font-size: 1.15rem;
+        }
+
+        code {
+            overflow-wrap: anywhere;
+        }
+
+        .warning {
+            flex-wrap: wrap;
+        }
+
+        .warning-button {
+            width: 100%;
+        }
+
+        .back {
+            margin-top: 32px;
+        }
+    }
 </style>
 </head>
 <body>
