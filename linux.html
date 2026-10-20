@@ -336,11 +336,11 @@
       </p>
 
       <p class="step">
-      To prevent Steam from automatically updating Geometry Dash, do the previous step to open the Geometry Dash folder, exit 2 folders (<code>Geometry Dash</code>, then <code>common</code>), and make sure you're in the <code>steamapps</code> folder. In the <code>steamapps</code> folder, you should see a file named <code>appmanifest_322170.acf</code>. We need to make that file read only. To do that via the terminal, open the terminal inside of the <code>steamapps</code> folder, then type this:
+      To prevent Steam from automatically updating Geometry Dash, do the previous step to open the Geometry Dash folder, exit 2 folders (<code>Geometry Dash</code>, then <code>common</code>), and make sure you're in the <code>steamapps</code> folder. In the <code>steamapps</code> folder, you should see a file named <code>appmanifest_322170.acf</code>. We need to lock that file so Steam can't change it. To do that via the terminal, open the terminal inside of the <code>steamapps</code> folder, then type this:
       </p>
 
       <ul>
-	<li>chmod 444 appmanifest_322170.acf</li>
+	<li>sudo chattr +i appmanifest_322170.acf</li>
       </ul>
 
       <h2>After Downgrading</h2>
@@ -351,7 +351,7 @@
 
       <p class="step">
         If Geometry Dash receives a new update, you will need to launch it through <code>GeometryDash.exe</code> in
-        the game's folder, or run <code>chmod 644 appmanifest_322170.acf</code> (check the previous steps to find the steamapps folder which is where this file is stored) to temporarily make the file writeable to
+        the game's folder, or run <code>sudo chattr -i appmanifest_322170.acf</code> (check the previous steps to find the steamapps folder which is where this file is stored) to temporarily unlock the file to
         update Geometry Dash, then follow this guide to downgrade it again.
       </p>
 
